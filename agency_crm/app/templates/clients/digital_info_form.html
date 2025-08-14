@@ -1,0 +1,91 @@
+{% extends "base.html" %}
+
+{% block title %}{{ title }} - Agency CRM{% endblock %}
+
+{% block content %}
+<div class="pb-5 border-b border-gray-200">
+    <nav class="flex" aria-label="Breadcrumb">
+        <ol class="flex items-center space-x-4">
+            <li>
+                <a href="{{ url_for('clients.brands') }}" class="text-sm font-medium text-gray-500 hover:text-gray-700">Brands</a>
+            </li>
+            <li>
+                <div class="flex items-center">
+                    <i class="fas fa-chevron-right text-gray-400 mx-2"></i>
+                    <a href="{{ url_for('clients.brand_detail', brand_id=brand.id) }}" class="text-sm font-medium text-gray-500 hover:text-gray-700">{{ brand.name }}</a>
+                </div>
+            </li>
+            <li>
+                <div class="flex items-center">
+                    <i class="fas fa-chevron-right text-gray-400 mx-2"></i>
+                    <a href="{{ url_for('clients.digital_info', brand_id=brand.id) }}" class="text-sm font-medium text-gray-500 hover:text-gray-700">Digital Info</a>
+                </div>
+            </li>
+            <li>
+                <div class="flex items-center">
+                    <i class="fas fa-chevron-right text-gray-400 mx-2"></i>
+                    <span class="text-sm font-medium text-gray-900">{{ title }}</span>
+                </div>
+            </li>
+        </ol>
+    </nav>
+    <h3 class="mt-2 text-2xl font-semibold leading-6 text-gray-900">{{ title }}</h3>
+</div>
+
+<div class="mt-6 max-w-5xl">
+    <form method="POST" action="">
+        {{ form.hidden_tag() }}
+        
+        <div class="space-y-6">
+            <!-- Planning Info Section -->
+            <div class="bg-white px-4 py-5 sm:p-6 shadow sm:rounded-lg">
+                <div class="mb-4">
+                    <h3 class="text-lg font-medium leading-6 text-gray-900">{{ form.digital_planning_info.label.text }}</h3>
+                    <p class="mt-1 text-sm text-gray-600">Include terminology, KPIs, campaign types, agreements with portals, pricing structures</p>
+                </div>
+                <div class="mt-2">
+                    {{ form.digital_planning_info(class="block w-full rounded-md border-gray-300 shadow-sm focus:border-indigo-500 focus:ring-indigo-500 sm:text-sm", rows=8) }}
+                    {% if form.digital_planning_info.errors %}
+                        <p class="mt-2 text-sm text-red-600">{{ form.digital_planning_info.errors[0] }}</p>
+                    {% endif %}
+                </div>
+            </div>
+
+            <!-- AdOps Info Section -->
+            <div class="bg-white px-4 py-5 sm:p-6 shadow sm:rounded-lg">
+                <div class="mb-4">
+                    <h3 class="text-lg font-medium leading-6 text-gray-900">{{ form.digital_adops_info.label.text }}</h3>
+                    <p class="mt-1 text-sm text-gray-600">Account details, permissions, ad page specifications, allowed formats</p>
+                </div>
+                <div class="mt-2">
+                    {{ form.digital_adops_info(class="block w-full rounded-md border-gray-300 shadow-sm focus:border-indigo-500 focus:ring-indigo-500 sm:text-sm", rows=8) }}
+                    {% if form.digital_adops_info.errors %}
+                        <p class="mt-2 text-sm text-red-600">{{ form.digital_adops_info.errors[0] }}</p>
+                    {% endif %}
+                </div>
+            </div>
+
+            <!-- Tracking Info Section -->
+            <div class="bg-white px-4 py-5 sm:p-6 shadow sm:rounded-lg">
+                <div class="mb-4">
+                    <h3 class="text-lg font-medium leading-6 text-gray-900">{{ form.digital_tracking_info.label.text }}</h3>
+                    <p class="mt-1 text-sm text-gray-600">Tracking event descriptions, naming conventions across different systems (GA4, Meta, etc.)</p>
+                </div>
+                <div class="mt-2">
+                    {{ form.digital_tracking_info(class="block w-full rounded-md border-gray-300 shadow-sm focus:border-indigo-500 focus:ring-indigo-500 sm:text-sm", rows=8) }}
+                    {% if form.digital_tracking_info.errors %}
+                        <p class="mt-2 text-sm text-red-600">{{ form.digital_tracking_info.errors[0] }}</p>
+                    {% endif %}
+                </div>
+            </div>
+        </div>
+
+        <div class="mt-6 px-4 py-3 bg-gray-50 text-right sm:px-6 rounded-lg">
+            <a href="{{ url_for('clients.digital_info', brand_id=brand.id) }}" class="inline-flex items-center px-4 py-2 border border-gray-300 rounded-md shadow-sm text-sm font-medium text-gray-700 bg-white hover:bg-gray-50">
+                Cancel
+            </a>
+            {{ form.submit(class="ml-3 inline-flex justify-center py-2 px-4 border border-transparent shadow-sm text-sm font-medium rounded-md text-white bg-indigo-600 hover:bg-indigo-700 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-indigo-500") }}
+        </div>
+    </form>
+</div>
+{% endblock %}
